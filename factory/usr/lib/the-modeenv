@@ -16,6 +16,9 @@ if grep -q snapd_recovery_mode=run /proc/cmdline; then
         echo '/run/mnt/ubuntu-boot/uboot/ubuntu /boot/uboot none bind 0 0' >> /run/image.fstab
     fi
 fi
+if grep '/ /run/mnt/ubuntu-save ' /proc/self/mountinfo ; then
+    echo '/run/mnt/ubuntu-save /var/lib/snapd/device/save none bind 0 0' >> /run/image.fstab
+fi
 mount -o bind /run/image.fstab /sysroot/etc/fstab
 umount -lf /sysroot/run
 cp /run/systemd/transient/*.mount /etc/systemd/system
